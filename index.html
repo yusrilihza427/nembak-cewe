@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mau Ga Jadi Pacar Aku?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffeff6 0%, #ffd6e8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .heart {
+            position: absolute;
+            background-color: #ff9bb6;
+            display: inline-block;
+            height: 30px;
+            width: 30px;
+            transform: rotate(-45deg);
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .heart:before, .heart:after {
+            content: "";
+            background-color: #ff9bb6;
+            border-radius: 50%;
+            height: 30px;
+            position: absolute;
+            width: 30px;
+        }
+        
+        .heart:before {
+            top: -15px;
+            left: 0;
+        }
+        
+        .heart:after {
+            left: 15px;
+            top: 0;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            position: relative;
+            max-width: 90%;
+            width: 500px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question {
+            color: #ff6b9d;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.8s ease;
+        }
+        
+        .question.hide {
+            opacity: 0;
+            transform: translateY(-50px) scale(0.8);
+            height: 0;
+            margin: 0;
+        }
+        
+        .buttons-container {
+            position: relative;
+            min-height: 150px;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.8s ease;
+        }
+        
+        .buttons-container.hide {
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+            height: 0;
+            margin: 0;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .btn-yes {
+            background-color: #ff6b9d;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn-yes:hover {
+            background-color: #ff4d8a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-no {
+            background-color: #f8c4ce;
+            color: #ff6b9d;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn-no:hover {
+            background-color: #f5b0be;
+        }
+        
+        .response {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            text-align: center;
+        }
+        
+        .response.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .response-text {
+            font-size: 3rem;
+            color: #ff6b9d;
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            font-family: 'Dancing Script', cursive;
+            line-height: 1.2;
+            background: linear-gradient(45deg, #ff6b9d, #ff8ab4, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(255, 107, 157, 0.5),
+                    0 0 20px rgba(255, 107, 157, 0.3),
+                    0 0 30px rgba(255, 107, 157, 0.2);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(255, 107, 157, 0.8),
+                    0 0 40px rgba(255, 107, 157, 0.5),
+                    0 0 60px rgba(255, 107, 157, 0.3);
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .question {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .response-text {
+                font-size: 2.2rem;
+            }
+            
+            .buttons-container {
+                min-height: 120px;
+                gap: 15px;
+            }
+            
+            .container {
+                min-height: 250px;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="hearts-container"></div>
+    
+    <div class="container">
+        <h1 class="question" id="question">mau ga jadi pacar aku?</h1>
+        
+        <div class="buttons-container" id="buttons-container">
+            <button class="btn btn-yes" id="yes-btn">mau bangettt</button>
+            <button class="btn btn-no" id="no-btn">tidak</button>
+        </div>
+        
+        <div class="response" id="response">
+            <p class="response-text">Halooo pacarrr baruukuu 💕</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const question = document.getElementById('question');
+            const yesBtn = document.getElementById('yes-btn');
+            const noBtn = document.getElementById('no-btn');
+            const response = document.getElementById('response');
+            const buttonsContainer = document.getElementById('buttons-container');
+            const heartsContainer = document.getElementById('hearts-container');
+            let clickCount = 0;
+            let yesBtnSize = 1;
+            
+            // Create floating hearts background
+            createHearts();
+            
+            // Handle "tidak" button click
+            noBtn.addEventListener('click', function() {
+                clickCount++;
+                
+                // Pindahkan tombol "tidak" secara acak di seluruh layar
+                moveButtonRandomly(noBtn);
+                
+                // Increase size of "mau bangettt" button
+                yesBtnSize += 0.2;
+                yesBtn.style.transform = `scale(${yesBtnSize})`;
+                
+                // Create a floating heart animation
+                createFloatingHeart();
+            });
+            
+            // Handle "mau bangettt" button click
+            yesBtn.addEventListener('click', function() {
+                // Sembunyikan pertanyaan dan tombol dengan animasi
+                question.classList.add('hide');
+                buttonsContainer.classList.add('hide');
+                
+                // Set timeout untuk menampilkan response setelah animasi selesai
+                setTimeout(() => {
+                    response.classList.add('show');
+                    
+                    // Create multiple floating hearts setelah response muncul
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => createFloatingHeart(), i * 100);
+                    }
+                    
+                    // Tambahkan heart emoji berjatuhan terus menerus
+                    setInterval(() => {
+                        createFloatingHeart();
+                    }, 800);
+                    
+                }, 800); // Sesuaikan dengan durasi animasi hide
+            });
+            
+            // Function to move button randomly anywhere on screen
+            function moveButtonRandomly(button) {
+                const buttonRect = button.getBoundingClientRect();
+                
+                // Hitung batas-batas untuk posisi acak di seluruh layar
+                const maxX = window.innerWidth - buttonRect.width;
+                const maxY = window.innerHeight - buttonRect.height;
+                
+                // Generate posisi acak di seluruh layar (bisa di dalam atau luar container)
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                
+                // Ubah posisi tombol menjadi absolute agar bisa bergerak bebas
+                button.style.position = 'fixed';
+                button.style.left = `${randomX}px`;
+                button.style.top = `${randomY}px`;
+                button.style.zIndex = '1000'; // Pastikan tombol selalu di atas
+                
+                // Tambahkan sedikit animasi untuk perpindahan yang halus
+                button.style.transition = 'left 0.3s ease, top 0.3s ease';
+                
+                // Hapus transisi setelah selesai untuk menghindari efek aneh pada klik berikutnya
+                setTimeout(() => {
+                    button.style.transition = '';
+                }, 300);
+            }
+            
+            // Function to create floating hearts
+            function createFloatingHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                const startX = Math.random() * window.innerWidth;
+                const size = Math.random() * 20 + 10;
+                
+                heart.style.left = `${startX}px`;
+                heart.style.top = `${window.innerHeight}px`;
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                heartsContainer.appendChild(heart);
+                
+                // Animate the heart
+                const animationDuration = Math.random() * 5 + 3;
+                heart.style.animation = `float ${animationDuration}s linear forwards`;
+                
+                // Remove heart after animation completes
+                setTimeout(() => {
+                    heart.remove();
+                }, animationDuration * 1000);
+            }
+            
+            // Create background hearts
+            function createHearts() {
+                for (let i = 0; i < 15; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    
+                    const size = Math.random() * 30 + 10;
+                    const posX = Math.random() * window.innerWidth;
+                    const posY = Math.random() * window.innerHeight;
+                    const rotation = Math.random() * 360;
+                    const opacity = Math.random() * 0.2 + 0.1;
+                    
+                    heart.style.left = `${posX}px`;
+                    heart.style.top = `${posY}px`;
+                    heart.style.width = `${size}px`;
+                    heart.style.height = `${size}px`;
+                    heart.style.transform = `rotate(${rotation}deg)`;
+                    heart.style.opacity = opacity;
+                    
+                    heartsContainer.appendChild(heart);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+add index.html.
